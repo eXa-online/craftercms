@@ -187,5 +187,21 @@ You can update, build, deploy, start or stop a module by:
 * If you don't specify the `env` parameter, it means all environments (where applicable).
 * In the current version of Crafter CMS, some services run in the same Web container, and that implies the stopping/starting of one of these services will cause other services to stop/start as well.
 
-# 4. Advanced Topics
+
+
+
+# 4. Setup Site for Delivery
+
+* https://docs.craftercms.org/en/3.0/system-administrators/activities/setup-site-for-delivery.html
+* delivery braucht ssh zugriff auf authoring!
+
+```bash
+    $ ssh thalia@thalia-delivery.exa-online.de
+    $ cd crafter/bin
+    $ ./init-site.sh -h
+    s ./init-site.sh thalia-dev ssh://thalia@thalia-authoring.exa-online.de/local/thalia/crafter/data/repos/sites/thalia-dev/published -a sjaenichen@exa-online.de,cpaul@exa-online.de
+```
+
+
+# 5. Advanced Topics
 For more detailed information and advanced topic, please visit the [detailed documentation](http://docs.craftercms.org/en/latest/developers/projects/craftercms).
