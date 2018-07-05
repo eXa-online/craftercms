@@ -13,6 +13,7 @@ You must have these prerequisites on your system before you begin:
 * Java 8
 * Git 2.x+
 * Maven 3.3.x+
+    * **Note:** Use the default maven settings.xml (since the build will fail with Thalia.de maven settings)
 
 **OS X extra prerequisite**
 
