@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+set -euCEmo pipefail
+
+function die() {
+    echo "$@" >&2 ; exit 1
+}
+
+declare PID_VAR
+
+case "$1" in
+    tomcat)
+        PID_VAR=CATALINA_PID
+        ;;
+    solr)
+        PID_VAR=SOLR_PID
+        ;;
+    deployer)
+        PID_VAR=DEPLOYER_PID
+        ;;
+    *)
+        echo "invalid service: $1" >&2
+        exit 2
+esac
+
+source "$CRAFTER_ROOT/bin/crafter-setenv.sh"
+
+# set options
+export DEPLOYER_SDOUT=/dev/stderr
+
+"$CRAFTER_ROOT/bin/crafter.sh" "start_$1"
+
+declare -i max_tries=20
+while [ ! -s "${!PID_VAR}" ]; do
+    sleep 1
+    if [ $((--max_tries)) -eq 0 ]; then
+        die "error: '${!PID_VAR}' file not written"
+    fi
+done
+
+declare -r PID=$(cat "${!PID_VAR}")
+
+trap '"$CRAFTER_ROOT/bin/crafter.sh" "stop_$1"' TERM INT
+
+tail -F "${!PID_VAR}" --pid=$PID &
+
+wait $! || :ignore

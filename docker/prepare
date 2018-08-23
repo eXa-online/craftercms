@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -euECo pipefail
+
+docker -t docker-harbor1.support.ecom.thalia.de/red/crafter-jre docker/jre
+
+cp -ft crafter-authoring docker/authoring/Dockerfile docker/authoring/supervisor.conf docker/docker-crafter
+
+cp -ft crafter-delivery docker/delivery/Dockerfile docker/delivery/supervisor.conf docker/docker-crafter
