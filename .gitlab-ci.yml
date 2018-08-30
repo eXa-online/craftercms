@@ -22,9 +22,11 @@ build crafter:
   script: ./gradlew init build deploy
   cache:
     paths:
-      - downloads
-#    - .gradle
-#    - .m2/repository
+      - downloads/
+  artifacts:
+    paths:
+      - crafter-authoring/
+      - crafter-delivery/
 
 #package crafter:
 #  stage: package
