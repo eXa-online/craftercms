@@ -2,7 +2,12 @@
 
 set -euECo pipefail
 
-docker -t docker-harbor1.support.ecom.thalia.de/red/crafter-jre docker/jre
+declare -r CRAFTER_JRE=docker-harbor1.support.ecom.thalia.de/red/crafter-jre
+
+# build the crafter-jre image if needed
+if ! docker inspect -f '{{.Id}}' "$CRAFTER_JRE" &> /dev/null; then
+    docker build --pull -t "$CRAFTER_JRE" docker/jre
+fi
 
 cp -ft crafter-authoring docker/authoring/Dockerfile docker/authoring/supervisor.conf docker/docker-crafter
 
