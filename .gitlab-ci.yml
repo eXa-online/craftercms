@@ -34,12 +34,21 @@ build crafter:
 
 create docker config:
   stage: docker config
+  before_script:
+    - apk update
+    - apk add bash
   script: ./docker/prepare
 
 docker authoring:
   stage: docker
+  before_script:
+    - apk update
+    - apk add bash
   script: ./docker/build authoring
 
 docker delivery:
   stage: docker
+  before_script:
+    - apk update
+    - apk add bash
   script: ./docker/build delivery
