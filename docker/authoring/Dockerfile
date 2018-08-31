@@ -1,12 +1,14 @@
 
 FROM docker-harbor1.support.ecom.thalia.de/red/crafter-jre
 
-COPY --chown=daemon:daemon bin /opt/crafter/bin
-COPY --chown=daemon:daemon data /opt/crafter/data
-COPY --chown=root:root crafter-*.conf /etc/supervisor/conf.d/
+COPY bin /opt/crafter/bin
+COPY data /opt/crafter/data
+COPY supervisor.conf /etc/supervisor/conf.d/crafter.conf
+
+RUN chown daemon:daemon -R /opt/crafter/bin /opt/crafter/data \
+    && chown root:root /etc/supervisor/conf.d/crafter.conf
 
 EXPOSE 8080
-
 
 # Local Variables:
 # dockerfile-image-name: "docker-harbor1.support.ecom.thalia.de/red/crafter-authoring"
