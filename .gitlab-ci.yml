@@ -15,7 +15,8 @@ variables:
 build:
   script:
     - ./gradlew init build deploy
-    - ./docker/prepare
+    - ./docker/prepare authoring
+    - ./docker/prepare delivery
     - ./docker/build authoring
     - ./docker/build delivery
   cache:
