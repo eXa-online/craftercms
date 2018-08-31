@@ -4,7 +4,7 @@ image: docker:stable
 variables:
   GRADLE_OPTS: "-Dcrafter.git.shallowClone=true"
   GRADLE_USER_HOME: "/cache/.gradle"
-  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2 -DinteractiveMode=false"
+  MAVEN_OPTS: "-Dmaven.repo.local=/cache/.m2/repository -DinteractiveMode=false"
   TERM: dumb
 
 stages:
@@ -24,7 +24,6 @@ build crafter:
   script: ./gradlew init build deploy
   cache:
     paths:
-      - .m2/
       - downloads/
   artifacts:
     paths:
