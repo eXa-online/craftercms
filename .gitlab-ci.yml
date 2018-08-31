@@ -1,5 +1,10 @@
 
-image: docker:stable
+
+image: maven:3-jdk-8-alpine
+
+before_script:
+  - apk update && apk add bash coreutils git docker
+  - docker info
 
 variables:
   GRADLE_OPTS: "-Dcrafter.git.shallowClone=true"
@@ -7,50 +12,15 @@ variables:
   MAVEN_OPTS: "-Dmaven.repo.local=/cache/.m2/repository -DinteractiveMode=false"
   TERM: dumb
 
-stages:
-  - bootstrap
-  - build
-  - docker config
-  - docker
-
-
-prepare craftercms build image:
-  stage: bootstrap
-  script: docker build --pull -t craftercms/build-image docker/build
-
-build crafter:
-  image: craftercms/build-image
-  stage: build
-  script: ./gradlew init build deploy
+build:
+  script:
+    - ./gradlew init build deploy
+    - ./docker/prepare
+    - ./docker/build authoring
+    - ./docker/build delivery
   cache:
     paths:
       - downloads/
-  artifacts:
-    paths:
-      - crafter-authoring/
-      - crafter-delivery/
 
-#package crafter:
-#  stage: package
-#  script: ./gradlew deploy
 
-create docker config:
-  stage: docker config
-  before_script:
-    - apk update
-    - apk add bash
-  script: ./docker/prepare
 
-docker authoring:
-  stage: docker
-  before_script:
-    - apk update
-    - apk add bash
-  script: ./docker/build authoring
-
-docker delivery:
-  stage: docker
-  before_script:
-    - apk update
-    - apk add bash
-  script: ./docker/build delivery
