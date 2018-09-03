@@ -11,5 +11,5 @@ RUN chown daemon:daemon -R /opt/crafter/bin /opt/crafter/data \
 EXPOSE 8080
 
 # Local Variables:
-# dockerfile-image-name: "docker-harbor1.support.ecom.thalia.de/red/crafter-authoring"
+# dockerfile-image-name: "docker-harbor1.support.ecom.thalia.de/red/cmsauthoring"
 # End:
