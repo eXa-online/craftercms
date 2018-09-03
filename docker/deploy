@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+#
+# usage: deploy delivery|authoring dev|integ [NR]
+
+set -euECo pipefail
+
+declare -r NAME="cms$1"
+declare -r ENV="$2"
+declare -r HOST_NR="${3-1}"
+
+declare -r USER=${SSH_USER:-root}
+declare -r CRAFTER_VERSION=$( sed -n -e 's/^ *project.version *= *"*\([0-9.]*\).*/\1/p' -e t build.gradle )
+declare -r IMAGE="docker-harbor1.support.ecom.thalia.de/cms/$NAME:${CRAFTER_VERSION:-$CI_COMMIT_REF_SLUG}"
+declare -r HOST="docker-${NAME}${HOST_NR}.${ENV}.ecom.thalia.de"
+
+declare -r DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+
+scp "$DIR/run-image" "$USER@$HOST:"
+ssh "$USER@$HOST" sudo bash -v run-image "$NAME" "$IMAGE"

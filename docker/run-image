@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -euECo pipefail
+
+declare -r NAME="$1"
+declare -r IMAGE="$2"
+declare -r DATA_DIR=/opt/crafter/data
+
+if [ ! -d "$DATA_DIR" ]; then
+    mkdir -p "$DATA_DIR"
+    chown -R 1:1 "$DATA_DIR"
+fi
+
+docker pull "$IMAGE"
+docker stop "$NAME" || : ok
+docker rm -v "$NAME" || : ok
+docker run -d --name "$NAME" -v "$DATA_DIR":/opt/crafter/data/ --restart=unless-stopped "$IMAGE"
+
+sleep 3 ; docker exec "$NAME" supervisorctl status
