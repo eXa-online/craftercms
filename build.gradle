@@ -232,7 +232,7 @@ buildModules.each { module ->
                     actualCommandLinePost.add("-Dstudio.ui.path=../studio-ui/".toString())
                     actualCommandLinePost.add("-Dexec.skip=true")
                 }
-                def array = commandLinePrefix + ["mvn", "install"] + actualCommandLinePost
+                def array = commandLinePrefix + ["mvn", "-B", "install"] + actualCommandLinePost
                 executeProcess(array, "./src/${module}".toString())
             })
             // Creates the Dependencies Array

@@ -1,0 +1,45 @@
+
+# This pipeline definition assumes a gitlab-runner using a docker executor with
+# access to the host's /var/run/docker.sock file:
+#
+# --- snip ---
+# [[runners]]
+# name = "docker-runner"
+# url = "http://um-cmsgitlab1.support.ecom.thalia.de/"
+# token = "..."
+# executor = "docker"
+# [runners.docker]
+#   tls_verify = false
+#   image = "docker:stable"
+#   privileged = false
+#   disable_cache = false
+#   volumes = ["/cache", "/var/run/docker.sock:/var/run/docker.sock"]
+#   shm_size = 0
+# [runners.cache]
+# --- snap ---
+
+image: maven:3-jdk-8-alpine
+
+before_script:
+  - apk update && apk add bash coreutils git docker
+  - docker info
+
+variables:
+  GRADLE_OPTS: "-Dcrafter.git.shallowClone=true"
+  GRADLE_USER_HOME: "/cache/.gradle"
+  MAVEN_OPTS: "-Dmaven.repo.local=/cache/.m2/repository -DinteractiveMode=false"
+  TERM: dumb
+
+build:
+  script:
+    - ./gradlew init build deploy
+    - ./docker/prepare authoring
+    - ./docker/prepare delivery
+    - ./docker/build authoring
+    - ./docker/build delivery
+  cache:
+    paths:
+      - downloads/
+
+
+
