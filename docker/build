@@ -3,7 +3,7 @@
 set -euECo pipefail
 
 declare -r CRAFTER_VERSION=$( sed -n -e 's/^ *project.version *= *"*\([0-9.]*\).*/\1/p' -e t build.gradle )
-declare -r IMAGE="docker-harbor1.support.ecom.thalia.de/red/cms$1:${CRAFTER_VERSION:-$CI_COMMIT_REF_SLUG}"
+declare -r IMAGE="docker-harbor1.support.ecom.thalia.de/cms/cms$1:${CRAFTER_VERSION:-$CI_COMMIT_REF_SLUG}"
 declare -r CRAFTER_ENV="crafter-$1"
 
 docker build -t "$IMAGE" "$CRAFTER_ENV"
