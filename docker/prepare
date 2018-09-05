@@ -11,5 +11,5 @@ fi
 
 declare -r CRAFTER_ENV="$1"
 
-cp -ft crafter-$CRAFTER_ENV docker/$CRAFTER_ENV/Dockerfile docker/$CRAFTER_ENV/supervisor.conf
-cp -ft crafter-$CRAFTER_ENV/bin docker/docker-crafter
+cp -f docker/$CRAFTER_ENV/Dockerfile docker/$CRAFTER_ENV/supervisor.conf crafter-$CRAFTER_ENV/
+cp -f docker/docker-crafter crafter-$CRAFTER_ENV/bin/

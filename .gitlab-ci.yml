@@ -21,7 +21,9 @@
 image: maven:3-jdk-8-alpine
 
 before_script:
-  - apk update && apk add bash coreutils git docker
+  - mkdir downloads || true
+  - ln -s $CI_PROJECT_DIR/downloads /etc/apk/cache
+  - apk update && apk add bash coreutils git docker && apk cache clean
   - docker info
 
 variables:
