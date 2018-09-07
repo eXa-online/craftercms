@@ -72,7 +72,6 @@ deploy to dev:
     - ./docker/deploy delivery dev
   environment:
     name: dev
-    url: http://docker-cmsauthoring1.dev.ecom.thalia.de
   when: manual
 
 deploy to integ:
@@ -90,5 +89,4 @@ deploy to integ:
     - ./docker/deploy delivery integ 2
   environment:
     name: integ
-    url: http://docker-cmsauthoring1.integ.ecom.thalia.de
   when: manual
