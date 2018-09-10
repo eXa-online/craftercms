@@ -12,5 +12,5 @@ RUN apt-get update && apt-get install -y --no-install-recommends supervisor proc
 ENTRYPOINT ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/supervisord.conf"]
 
 # Local Variables:
-# dockerfile-image-name: "docker-harbor1.support.ecom.thalia.de/red/crafter-jre"
+# dockerfile-image-name: "docker-harbor1.support.ecom.thalia.de/cms/crafter-jre"
 # End:
