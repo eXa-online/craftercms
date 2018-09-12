@@ -1,5 +1,5 @@
 
-FROM docker-harbor1.support.ecom.thalia.de/red/crafter-jre
+FROM docker-harbor1.support.ecom.thalia.de/cms/crafter-jre
 
 COPY bin /opt/crafter/bin
 COPY data /opt/crafter/data

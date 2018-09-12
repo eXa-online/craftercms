@@ -20,19 +20,25 @@
 
 image: maven:3-jdk-8-alpine
 
-before_script:
-  - mkdir downloads || true
-  - ln -s $CI_PROJECT_DIR/downloads /etc/apk/cache
-  - apk update && apk add bash coreutils git docker && apk cache clean
-  - docker info
-
 variables:
   GRADLE_OPTS: "-Dcrafter.git.shallowClone=true"
   GRADLE_USER_HOME: "/cache/.gradle"
   MAVEN_OPTS: "-Dmaven.repo.local=/cache/.m2/repository -DinteractiveMode=false"
   TERM: dumb
 
+stages:
+  - build
+  - publish
+  - deploy
+
+before_script:
+  - mkdir downloads || true
+  - ln -s $CI_PROJECT_DIR/downloads /etc/apk/cache
+  - apk update && apk add bash coreutils git docker && apk cache clean
+  - docker info
+
 build:
+  stage: build
   script:
     - ./gradlew init build deploy
     - ./docker/prepare authoring
@@ -43,5 +49,44 @@ build:
     paths:
       - downloads/
 
+publish:
+  stage: publish
+  script:
+    - docker login -u "$HARBOR_USER" -p "$HARBOR_PASSWORD" docker-harbor1.support.ecom.thalia.de
+    - ./docker/publish authoring
+    - ./docker/publish delivery
+  only:
+    - master
 
+deploy to dev:
+  stage: deploy
+  before_script:
+    - apk update && apk add bash openssh-client
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+    - echo "$SSH_PRIVATE_KEY"| tr -d '\r'  > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/known_hosts ~/.ssh/id_rsa
+  script:
+    - ./docker/deploy authoring dev
+    - ./docker/deploy delivery dev
+  environment:
+    name: dev
+  when: manual
 
+deploy to integ:
+  stage: deploy
+  before_script:
+    - apk update && apk add bash openssh-client
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/known_hosts ~/.ssh/id_rsa
+  script:
+    - ./docker/deploy authoring integ
+    - ./docker/deploy delivery integ 1
+    - ./docker/deploy delivery integ 2
+  environment:
+    name: integ
+  when: manual
