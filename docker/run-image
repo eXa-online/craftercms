@@ -11,9 +11,15 @@ if [ ! -d "$DATA_DIR" ]; then
     chown -R 1:1 "$DATA_DIR"
 fi
 
+declare -i PORT=8080
+
+if [ "$NAME" = cmsdelivery ]; then
+    PORT=9080
+fi
+
 docker pull "$IMAGE"
 docker stop "$NAME" || : ok
 docker rm -v "$NAME" || : ok
-docker run -d --name "$NAME" -v "$DATA_DIR":/opt/crafter/data/ --restart=unless-stopped "$IMAGE"
+docker run -d --name "$NAME" -v "$DATA_DIR":/opt/crafter/data/ --restart=unless-stopped -p "80:$PORT" "$IMAGE"
 
 sleep 3 ; docker exec "$NAME" supervisorctl status
