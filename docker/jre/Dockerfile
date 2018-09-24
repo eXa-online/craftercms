@@ -2,15 +2,19 @@ FROM openjdk:8-jre-slim
 
 ENV CRAFTER_ROOT=/opt/crafter
 ENV CRAFTER_HOME=/opt/crafter/bin
+ENV CRAFTER_USER=crafter
 
-RUN apt-get update && apt-get install -y --no-install-recommends supervisor procps lsof \
+COPY entrypoint.sh /
+
+RUN apt-get update && apt-get install -y --no-install-recommends curl supervisor procps lsof \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir -p /var/log/supervisor \
-    && mkdir -p $CRAFTER_ROOT \
-    && chown -R daemon: $CRAFTER_ROOT
+    && adduser --system --uid 144 --group --home $CRAFTER_ROOT $CRAFTER_USER
 
-ENTRYPOINT ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/supervisord.conf"]
+ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
+
+CMD [supervisord]
 
 # Local Variables:
-# dockerfile-image-name: "docker-harbor1.support.ecom.thalia.de/cms/crafter-jre"
+# dockerfile-image-name: "docker-harbor1.support.ecom.thalia.de/cms/crafter-jre:1"
 # End:

@@ -2,7 +2,7 @@
 
 set -euECo pipefail
 
-declare -r CRAFTER_JRE=docker-harbor1.support.ecom.thalia.de/cms/crafter-jre
+declare -r CRAFTER_JRE=docker-harbor1.support.ecom.thalia.de/cms/crafter-jre:1
 
 # build the crafter-jre image if needed
 if ! docker inspect -f '{{.Id}}' "$CRAFTER_JRE" &> /dev/null; then
