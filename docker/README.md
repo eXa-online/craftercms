@@ -10,8 +10,8 @@ for the CrafterCMS.
 1. run `./gradlew init build deploy` in order to create the `crafter-authoring` and
    `crafter-delivery` folders
 
-2. run `docker/prepare` which copies the Dockerfiles and required files into
-   the appropriate environments
+2. run `docker/prepare authoring` or `docker/prepare delivery` to copy the Dockerfiles and required files into
+   the appropriate environment
    
 3. run `docker/build authoring` or `docker/build delivery` to create the
    cmsauthoring and cmsdelivery Docker images, respectively
