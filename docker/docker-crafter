@@ -44,4 +44,4 @@ trap '"$CRAFTER_ROOT/bin/crafter.sh" "stop_$1"' TERM INT
 
 tail -F "${!PID_VAR}" --pid=$PID &
 
-wait $! || :ignore
+wait $! || : ignore

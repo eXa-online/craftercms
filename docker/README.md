@@ -29,15 +29,16 @@ docker run --rm -p 127.0.0.1:8080:8080 docker-harbor1.support.ecom.thalia.de/cms
 This exposes the studio at port 8080 on the local host only.
 
 In production, you should bind mount a host folder or dedicated Docker volume to
-the `/opt/crafter/data` directory in order to store the dynamic data external:
+the `/opt/crafter/data` directory in order to store the dynamic data externally:
 
 ```sh
 docker run -d --name cmsauthoring -p 127.0.0.1:8080:8080 -v /opt/data/:/opt/crafter/data \
   docker-harbor1.support.ecom.thalia.de/cms/cmsauthoring
 ```
 
-_Note_: the services inside the container run as the `daemon` user, UID 1. Ensure that
-        the user has write permissions in `/opt/crafter/data/`.
+_Note_: the services inside the container run as the `crafter` user. The Docker
+        entrypoint script ensures that all files inside `/opt/crafter/data` are
+        owned by this user at startup.
 
 ## Publishing
 
