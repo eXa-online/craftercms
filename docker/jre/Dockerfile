@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends curl supervisor
 
 ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
 
-CMD [supervisord]
+CMD ["supervisord"]
 
 # Local Variables:
 # dockerfile-image-name: "docker-harbor1.support.ecom.thalia.de/cms/crafter-jre:1"
