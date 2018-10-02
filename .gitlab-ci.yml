@@ -72,7 +72,8 @@ deploy to dev:
     - ./docker/deploy delivery dev
   environment:
     name: dev
-  when: manual
+  only:
+    - develop
 
 deploy to integ:
   stage: deploy
@@ -89,4 +90,26 @@ deploy to integ:
     - ./docker/deploy delivery integ 2
   environment:
     name: integ
-  when: manual
+  only:
+    - integ
+
+deploy to prod:
+  stage: deploy
+  before_script:
+    - apk update && apk add bash openssh-client
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/known_hosts ~/.ssh/id_rsa
+  script:
+    - ./docker/deploy authoring prod
+    - ./docker/deploy delivery prod 1
+    - ./docker/deploy delivery prod 2
+    - ./docker/deploy authoring hotfix
+    - ./docker/deploy delivery hotfix 1
+    - ./docker/deploy delivery hotfix 2
+  environment:
+    name: prod
+  only:
+    - master
