@@ -10,15 +10,14 @@ if [ ! -d "$DATA_DIR" ]; then
     mkdir -p "$DATA_DIR"
 fi
 
-declare -i PORT=8080
-
-if [ "$NAME" = cmsdelivery ]; then
-    PORT=9080
-fi
-
 docker pull "$IMAGE"
 docker stop "$NAME" || : ok
 docker rm -v "$NAME" || : ok
-docker run -d --name "$NAME" -v "$DATA_DIR":/opt/crafter/data/ --restart=unless-stopped -p "80:$PORT" "$IMAGE"
+
+if [ "$NAME" = cmsdelivery ]; then
+    docker run -d --name "$NAME" -v "$DATA_DIR":/opt/crafter/data/ --restart=unless-stopped -p 80:9080 -p 8695:8695 "$IMAGE"
+else
+    docker run -d --name "$NAME" -v "$DATA_DIR":/opt/crafter/data/ --restart=unless-stopped -p 80:8080 -p 8694:8694 -p 33306:33306 "$IMAGE"
+fi
 
 sleep 3 ; docker exec "$NAME" supervisorctl status

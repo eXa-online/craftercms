@@ -8,7 +8,7 @@ COPY supervisor.conf /etc/supervisor/conf.d/crafter.conf
 RUN chown $CRAFTER_USER: -R /opt/crafter/bin /opt/crafter/data \
     && chown root:root /etc/supervisor/conf.d/crafter.conf
 
-EXPOSE 9080
+EXPOSE 9080 8695
 
 # Local Variables:
 # dockerfile-image-name: "docker-harbor1.support.ecom.thalia.de/cms/cmsdelivery"
