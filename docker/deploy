@@ -15,5 +15,10 @@ declare -r HOST="docker-${NAME}${HOST_NR}.${ENV}.ecom.thalia.de"
 
 declare -r DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
+echo "Copy ssh folder to target host:"
+ssh "$USER@$HOST" mkdir -p .ssh/
+scp -rp ~/.ssh/ "$USER@$HOST:"
+
+echo "Copy run-image script to tartget host:"
 scp "$DIR/run-image" "$USER@$HOST:"
 ssh "$USER@$HOST" sudo bash -v run-image "$NAME" "$IMAGE"
