@@ -11,8 +11,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends curl supervisor
     && mkdir -p /var/log/supervisor \
     && adduser --system --uid 144 --group --home $CRAFTER_ROOT $CRAFTER_USER
 
-USER crafter
-
 ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
 
 CMD ["supervisord"]
