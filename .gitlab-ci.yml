@@ -45,6 +45,8 @@ build:
     - ./docker/prepare delivery
     - ./docker/build authoring
     - ./docker/build delivery
+  only:
+    - master
   cache:
     paths:
       - downloads/
@@ -72,8 +74,7 @@ deploy to dev:
     - ./docker/deploy delivery dev
   environment:
     name: dev
-  only:
-    - develop
+  when: manual
 
 deploy to integ:
   stage: deploy
@@ -90,8 +91,7 @@ deploy to integ:
     - ./docker/deploy delivery integ 2
   environment:
     name: integ
-  only:
-    - integ
+  when: manual
 
 deploy to prod:
   stage: deploy
@@ -111,5 +111,4 @@ deploy to prod:
     - ./docker/deploy delivery hotfix 2
   environment:
     name: prod
-  only:
-    - master
+  when: manual
