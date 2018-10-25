@@ -23,16 +23,17 @@ Once the images are build, they are usable as a standalone container, with zero
 configuration or setup needed:
 
 ```sh
-docker run --rm -p 127.0.0.1:8080:8080 docker-harbor1.support.ecom.thalia.de/cms/cmsauthoring
+docker run --rm -p 8080:8080 -p 33306:33306 -p 8694:8694 docker-harbor1.support.ecom.thalia.de/cms/cmsauthoring
 ```
 
-This exposes the studio at port 8080 on the local host only.
+This exposes the ports 8080 (tomcat), 33306 (mariadb) and 8694 (solr) on the host machine.
 
 In production, you should bind mount a host folder or dedicated Docker volume to
-the `/opt/crafter/data` directory in order to store the dynamic data externally:
+the `/opt/crafter/data` and `/opt/crafter/logs` directory in order to store the dynamic data externally:
 
 ```sh
-docker run -d --name cmsauthoring -p 127.0.0.1:8080:8080 -v /opt/data/:/opt/crafter/data \
+docker run -d --name cmsauthoring -p 127.0.0.1:8080:8080 -v /opt/crafter/data/:/opt/crafter/data \
+ -v /opt/crafter/logs/:/opt/crafter/logs \
   docker-harbor1.support.ecom.thalia.de/cms/cmsauthoring
 ```
 
@@ -51,7 +52,8 @@ The `publish` stage of the Gitlab CI pipeline requires some variables to be set 
 
 ## Deployment
 
-The `deploy` stage of the Gitlab CI pipeline requires a few variables to be set:
+The `deploy` stage of the Gitlab CI pipeline pulls the required image from the docker-harbor1.support.ecom.thalia.de repository.
+And starts the container. A few variables a required to be set:
 
 * `SSH_KNOWN_HOSTS` - the SSH host keys of all target servers, obtained by running `ssh-keyscan` (see
   https://docs.gitlab.com/ee/ci/ssh_keys/#verifying-the-ssh-host-keys)
