@@ -21,4 +21,4 @@ scp -rp ~/.ssh/ "$USER@$HOST:"
 
 echo "Copy run-image script to tartget host:"
 scp "$DIR/run-image" "$USER@$HOST:"
-ssh "$USER@$HOST" sudo bash -v run-image "$NAME" "$IMAGE"
+ssh "$USER@$HOST" bash -v run-image "$NAME" "$IMAGE"

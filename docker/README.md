@@ -62,12 +62,12 @@ And starts the container. A few variables a required to be set:
 
 * `SSH_USER` - the user to use for the SSH connection (default: `root`)
 
-_Note_: The `SSH_USER` needs sudo permissions since the deployment script must
-        be run as root. Therefore, the root user should be able to pull docker
-        images from docker-harbor1.support.ecom.thalia.de.
+_Note_: The `SSH_USER` is in docker group or needs sudo permissions in order to run the deployment script. 
+        Therefore, the user should be able to pull docker images from docker-harbor1.support.ecom.thalia.de.
 
-        Run `sudo docker login -u HARBOR_USER -p HARBOR_PASSWORD docker-harbor1.support.ecom.thalia.de`
+        Run `[sudo] docker login -u HARBOR_USER -p HARBOR_PASSWORD docker-harbor1.support.ecom.thalia.de`
         once on the target host.
+
 
 ### Add or update a target host
 
