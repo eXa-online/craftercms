@@ -19,6 +19,6 @@ echo "Copy ssh folder to target host:"
 ssh "$USER@$HOST" mkdir -p .ssh/
 scp -rp ~/.ssh/ "$USER@$HOST:"
 
-echo "Copy run-image script to tartget host:"
+echo "Copy run-image script to target host:"
 scp "$DIR/run-image" "$USER@$HOST:"
 ssh "$USER@$HOST" bash -v run-image "$NAME" "$IMAGE"
