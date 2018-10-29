@@ -21,4 +21,4 @@ scp -rp ~/.ssh/ "$USER@$HOST:"
 
 echo "Copy run-image script to target host:"
 scp "$DIR/run-image" "$USER@$HOST:"
-ssh "$USER@$HOST" bash -v run-image "$NAME" "$IMAGE"
+ssh "$USER@$HOST" bash -v run-image "$NAME" "$IMAGE" "$ENV"

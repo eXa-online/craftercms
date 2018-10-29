@@ -4,6 +4,7 @@ set -euECo pipefail
 
 declare -r NAME="$1"
 declare -r IMAGE="$2"
+declare -r ENV="$3"
 declare -r DATA_DIR=/opt/crafter/data
 declare -r LOGS_DIR=/opt/crafter/logs
 
@@ -26,6 +27,10 @@ fi
 
 echo "Copy ssh-folder into container"
 docker cp .ssh/ "$NAME:/opt/crafter/.ssh/"
+
+echo "Configure site configuration: $ENV-server-config.properties"
+docker cp "$NAME:/opt/crafter/bin/apache-tomcat/shared/classes/crafter/engine/extension/$ENV-server-config.properties" server-config.properties
+docker cp server-config.properties "$NAME:/opt/crafter/bin/apache-tomcat/shared/classes/crafter/engine/extension/server-config.properties"
 
 echo "Start container $NAME"
 docker start "$NAME"
