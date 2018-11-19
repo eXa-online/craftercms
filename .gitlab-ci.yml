@@ -47,6 +47,7 @@ build:
     - ./docker/build delivery
   only:
     - master
+    - feature/RED-2753_DeliveryMetrikenMonitoring
   cache:
     paths:
       - downloads/
@@ -59,6 +60,7 @@ publish:
     - ./docker/publish delivery
   only:
     - master
+    - feature/RED-2753_DeliveryMetrikenMonitoring
 
 deploy to dev:
   stage: deploy

@@ -254,7 +254,10 @@ envs.each { env ->
                 copy {
                     from zipTree(downloadDir + "/apache-tomcat-${tomcatVersion}.zip")
                     into "${path}/bin"
-                    exclude "**/webapps/**"
+                    exclude "**/webapps/docs/**"
+                    exclude "**/webapps/examples/**"
+                    exclude "**/webapps/host-manager/**"
+                    exclude "**/webapps/ROOT/**"
                 }
                 file("${path}/bin/apache-tomcat-${tomcatVersion}").renameTo(file("${path}/bin/apache-tomcat"))
                 file("${path}/bin/apache-tomcat/shared/lib").mkdirs()
@@ -306,6 +309,11 @@ envs.each { env ->
 
             copy {
                 from "./resources/tomcat-config/catalina.policy"
+                into "${path}/bin/apache-tomcat/conf/"
+            }
+
+            copy {
+                from "./resources/tomcat-config/tomcat-users.xml"
                 into "${path}/bin/apache-tomcat/conf/"
             }
 
