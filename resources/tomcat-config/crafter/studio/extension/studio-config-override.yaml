@@ -45,8 +45,11 @@ studio.preview.search.deleteUrl: http://localhost:@TOMCAT_HTTP_PORT@/crafter-sea
 # Format:
 # jdbc:DATABASE_PLATFORM;databaseName=DATABASE_NAME;create=true;user=DATABASE_USERNAME;password=DATABASE_USER_PASSWORD
 # Note that a relative path is not suitable for a production deployment
-studio.db.url: jdbc:mariadb://127.0.0.1:@MARIADB_PORT@/crafter?user=crafter&password=crafter
-
+studio.db.url: jdbc:mariadb://127.0.0.1:@MARIADB_PORT@/crafter?user=crafter&password=Yw4przRVRdnkj4FY
+# Username used for authentication to access crafter database.
+studio.db.username: crafter
+# Password used for authentication to access crafter database.
+studio.db.password: Yw4przRVRdnkj4FY
 # Connection string used to initialize database
 studio.db.initializer.url: jdbc:mariadb://127.0.0.1:@MARIADB_PORT@?user=root&password=
 # Port number for the embedded database (note this must match what's in the connection URLs in this config file)
