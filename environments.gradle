@@ -313,6 +313,11 @@ envs.each { env ->
             }
 
             copy {
+                from "./resources/tomcat-config/manager.xml"
+                into "${path}/bin/apache-tomcat/conf/Catalina/localhost"
+            }
+
+            copy {
                 from "./resources/tomcat-config/tomcat-users.xml"
                 into "${path}/bin/apache-tomcat/conf/"
             }

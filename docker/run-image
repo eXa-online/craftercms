@@ -28,9 +28,6 @@ fi
 echo "Copy ssh-folder into container"
 docker cp .ssh/ "$NAME:/opt/crafter/.ssh/"
 
-echo "Copy manager.xml into container"
-docker cp resources/tomcat-config/manager.xml "$NAME:/opt/crafter/bin/apache-tomcat/conf/Catalina/localhost/manager.xml"
-
 echo "Configure site configuration: $ENV-server-config.properties"
 docker cp "$NAME:/opt/crafter/bin/apache-tomcat/shared/classes/crafter/engine/extension/$ENV-server-config.properties" server-config.properties
 docker cp server-config.properties "$NAME:/opt/crafter/bin/apache-tomcat/shared/classes/crafter/engine/extension/server-config.properties"
