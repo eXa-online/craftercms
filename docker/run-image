@@ -18,11 +18,16 @@ echo "Stop and remove container in case it is running $NAME"
 docker stop "$NAME" || : ok
 docker rm -v "$NAME" || : ok
 
+
 echo "Create new container $NAME"
 if [ "$NAME" = cmsdelivery ]; then
     docker create --name "$NAME" -v "$DATA_DIR":/opt/crafter/data/ -v "$LOGS_DIR":/opt/crafter/logs/ --restart=unless-stopped -p 9080:9080 -p 8695:8695 "$IMAGE"
 else
-    docker create --name "$NAME" -v "$DATA_DIR":/opt/crafter/data/ -v "$LOGS_DIR":/opt/crafter/logs/ --restart=unless-stopped -p 80:8080 -p 8694:8694 -p 33306:33306 "$IMAGE"
+    if [ "$ENV" = dev ]; then
+        docker create --name "$NAME" -v "$DATA_DIR":/opt/crafter/data/ -v "$LOGS_DIR":/opt/crafter/logs/ --restart=unless-stopped -p 80:8080 -p 8694:8694 -p 33306:33306 "$IMAGE"
+    else
+        docker create --name "$NAME" -v "$DATA_DIR":/opt/crafter/data/ -v "$LOGS_DIR":/opt/crafter/logs/ --restart=unless-stopped -p 80:8080 -p 8694:8694 "$IMAGE"
+    fi
 fi
 
 echo "Copy ssh-folder into container"
