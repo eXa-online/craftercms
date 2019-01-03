@@ -106,8 +106,8 @@
         </file>
         <file>
             <path>/studio/mime-type.xml</path>
-            <title>Mime Types</title>
-            <description>mime Types</description>
+            <title>confTabMimeTypes</title>
+            <description>confTabMimeTypesDesc</description>
             <samplePath>/studio/administration/samples/sample-mime-type.xml</samplePath>
         </file>
         <file>
@@ -124,26 +124,32 @@
         </file>
         <file>
             <path>/studio/dependency/resolver-config.xml</path>
-            <title>Dependency Resolver Configuration</title>
-            <description>Dependency Resolver Configuration</description>
+            <title>confTabDependencyResolverConf</title>
+            <description>confTabDependencyResolverConfDesc</description>
             <samplePath>/studio/administration/samples/sample-resolver-config.xml</samplePath>
         </file>
         <file>
             <path>/studio/aws/aws.xml</path>
-            <title>AWS Profiles</title>
-            <description>AWS Profiles</description>
+            <title>confTabAWSProfiles</title>
+            <description>confTabAWSProfilesDesc</description>
             <samplePath>/studio/administration/samples/sample-aws.xml</samplePath>
         </file>
         <file>
             <path>/studio/box/box.xml</path>
-            <title>Box Profiles</title>
-            <description>Box Profiles</description>
+            <title>confTabBoxProfiles</title>
+            <description>confTabBoxProfilesDesc</description>
             <samplePath>/studio/administration/samples/sample-box.xml</samplePath>
         </file>
         <file>
+            <path>/studio/webdav/webdav.xml</path>
+            <title>confTabWebDAVProfiles</title>
+            <description>confTabWebDAVProfilesDesc</description>
+            <samplePath>/studio/administration/samples/sample-webdav.xml</samplePath>
+        </file>
+        <file>
             <path>/studio/asset-processing/asset-processing-config.xml</path>
-            <title>Asset Processing</title>
-            <description>Asset Processing</description>
+            <title>confTabAssetProcessing</title>
+            <description>confTabAssetProcessingDesc</description>
             <samplePath>/studio/administration/samples/sample-asset-processing-config.xml</samplePath>
         </file>
     </files>
